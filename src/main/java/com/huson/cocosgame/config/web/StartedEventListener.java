@@ -74,7 +74,8 @@ public class StartedEventListener implements ApplicationListener<ContextRefreshe
     	if(gameRoomList.size() > 0){
     		for(GameRoom gameRoom : gameRoomList){
     			if(gameRoom.isCardroom()){
-    				gameRoomRes.delete(gameRoom);//回收房卡房间资源
+					//回收房卡房间资源
+    				gameRoomRes.delete(gameRoom);
     			}else{
     				CacheHelper.getQueneCache().offer(gameRoom, gameRoom.getOrgi());
     				CacheHelper.getGameRoomCacheBean().put(gameRoom.getId(), gameRoom, gameRoom.getOrgi());

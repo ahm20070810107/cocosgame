@@ -21,7 +21,7 @@ public class BeiMiStateMachineConfig<T, S>  {
 	
 	@Bean
 	public BeiMiStateMachine<String,String> create() throws Exception{
-		BeiMiStateMachine<String,String> beiMiStateMachine = new BeiMiStateMachine<String,String>();
+		BeiMiStateMachine<String,String> beiMiStateMachine = new BeiMiStateMachine<>();
 		this.configure(beiMiStateMachine.getConfig());
 		this.configure(beiMiStateMachine.getTransitions());
 		return beiMiStateMachine;
@@ -48,31 +48,32 @@ public class BeiMiStateMachineConfig<T, S>  {
         transitions
 	        .withExternal()	
 		    	.source(BeiMiGameEnum.NONE.toString()).target(BeiMiGameEnum.CRERATED.toString())
-		    	.event(BeiMiGameEvent.ENTER.toString()).action(new EnterAction<String,String>())
+		    	.event(BeiMiGameEvent.ENTER.toString()).action(new EnterAction<>())
 		    	.and()
 		    .withExternal()	
 	        	.source(BeiMiGameEnum.CRERATED.toString()).target(BeiMiGameEnum.WAITTING.toString())
-	        	.event(BeiMiGameEvent.JOIN.toString()).action(new JoinAction<String,String>())
+	        	.event(BeiMiGameEvent.JOIN.toString()).action(new JoinAction<>())
 	        	.and()
             .withExternal()	
                 .source(BeiMiGameEnum.WAITTING.toString()).target(BeiMiGameEnum.READY.toString())
-                .event(BeiMiGameEvent.ENOUGH.toString()).action(new EnoughAction<String, String>())
+                .event(BeiMiGameEvent.ENOUGH.toString()).action(new EnoughAction<>())
                 .and()
             .withExternal()
                 .source(BeiMiGameEnum.READY.toString()).target(BeiMiGameEnum.BEGIN.toString())
-                .event(BeiMiGameEvent.AUTO.toString()).action(new AutoAction<String,String>())	//抢地主 
+				//抢地主
+                .event(BeiMiGameEvent.AUTO.toString()).action(new AutoAction<>())
                 .and()
             .withExternal()
                 .source(BeiMiGameEnum.BEGIN.toString()).target(BeiMiGameEnum.LASTHANDS.toString())
-                .event(BeiMiGameEvent.RAISEHANDS.toString()).action(new RaiseHandsAction<String,String>())
+                .event(BeiMiGameEvent.RAISEHANDS.toString()).action(new RaiseHandsAction<>())
                 .and()
             .withExternal()
                 .source(BeiMiGameEnum.LASTHANDS.toString()).target(BeiMiGameEnum.PLAY.toString())
-                .event(BeiMiGameEvent.PLAYCARDS.toString()).action(new PlayCardsAction<String,String>())
+                .event(BeiMiGameEvent.PLAYCARDS.toString()).action(new PlayCardsAction<>())
                 .and()
             .withExternal()
                 .source(BeiMiGameEnum.PLAY.toString()).target(BeiMiGameEnum.END.toString())
-                .event(BeiMiGameEvent.ALLCARDS.toString()).action(new EventAction<String,String>())
+                .event(BeiMiGameEvent.ALLCARDS.toString()).action(new EventAction<>())
             ;
     }
 }

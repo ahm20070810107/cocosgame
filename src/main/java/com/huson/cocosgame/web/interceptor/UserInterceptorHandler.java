@@ -3,7 +3,6 @@ package com.huson.cocosgame.web.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,15 +16,15 @@ import com.huson.cocosgame.web.model.BeiMiDic;
 import com.huson.cocosgame.web.model.User;
 
 public class UserInterceptorHandler extends HandlerInterceptorAdapter {
-	
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
     	boolean filter = false; 
     	if(handler instanceof HandlerMethod){
 	        User user = (User) request.getSession(true).getAttribute(BMDataContext.USER_SESSION_NAME) ;
 	        HandlerMethod  handlerMethod = (HandlerMethod ) handler ;
-	        Menu menu = handlerMethod.getMethod().getAnnotation(Menu.class) ;
-	        if(user != null || (menu!=null && menu.access()) || handlerMethod.getBean() instanceof BasicErrorController){
+	        Menu menu = handlerMethod.getMethod().getAnnotation(Menu.class);
+	        if(user != null || (menu!=null && menu.access()) ){
 	        	filter = true;
 	        }
 	        
@@ -36,6 +35,7 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
         return filter ; 
     }
 
+    @Override
     public void postHandle(HttpServletRequest arg0, HttpServletResponse response, Object arg2,
             ModelAndView view) throws Exception {
     	User user = (User) arg0.getSession().getAttribute(BMDataContext.USER_SESSION_NAME) ;
@@ -72,7 +72,8 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
 			if(arg0.getParameter("msg") != null){
 				view.addObject("msg", arg0.getParameter("msg")) ;
 			}
-			view.addObject("uKeFuDic", BeiMiDic.getInstance()) ;	//处理系统 字典数据 ， 通过 字典code 获取
+			//处理系统 字典数据 ， 通过 字典code 获取
+			view.addObject("uKeFuDic", BeiMiDic.getInstance()) ;
 			SystemConfig systemConfig = (SystemConfig) CacheHelper.getSystemCacheBean().getCacheObject("systemConfig", BMDataContext.SYSTEM_ORGI) ; 
 			if(systemConfig != null){
 				view.addObject("systemConfig", systemConfig)  ;
@@ -83,6 +84,7 @@ public class UserInterceptorHandler extends HandlerInterceptorAdapter {
     	}
     }
 
+    @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
     }

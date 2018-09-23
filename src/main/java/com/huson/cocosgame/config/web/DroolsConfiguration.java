@@ -65,12 +65,7 @@ public class DroolsConfiguration {
     public KieBase kieBase() throws IOException {
         return kieContainer().getKieBase();
     }
-    
-    /*
-     *  As http://docs.jboss.org/drools/release/6.2.0.CR1/drools-docs/html/ch.kie.spring.html
-     *  mentions: Without the org.kie.spring.KModuleBeanFactoryPostProcessor bean definition,
-     *  the kie-spring integration will not work
-     */
+
     @Bean
     @ConditionalOnMissingBean(KModuleBeanFactoryPostProcessor.class)
     public KModuleBeanFactoryPostProcessor kiePostProcessor() {

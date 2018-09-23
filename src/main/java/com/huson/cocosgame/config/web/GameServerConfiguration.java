@@ -76,6 +76,7 @@ public class GameServerConfiguration
 		config.setWorkerThreads(workThreads);
 //		config.setStoreFactory(new HazelcastStoreFactory());
 		config.setAuthorizationListener(new AuthorizationListener() {
+			@Override
 			public boolean isAuthorized(HandshakeData data) {
 				return true;	//其他安全验证策略，IP，Token，用户名
 			}

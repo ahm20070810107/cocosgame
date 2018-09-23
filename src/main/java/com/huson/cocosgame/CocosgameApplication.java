@@ -1,4 +1,4 @@
-package com.huson.cocosgame.cocosgame;
+package com.huson.cocosgame;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -26,6 +26,7 @@ public class ApiRequestMatchingFilter implements Filter {
         this.ignoredRequests = matcher;
     }
 
+    @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
          HttpServletRequest request = (HttpServletRequest) req;
          boolean matchAnyRoles = false ;
